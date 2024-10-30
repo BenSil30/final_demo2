@@ -18,6 +18,8 @@ public class TattooGunManager : MonoBehaviour
 
 	public float inkAmount, gunVoltage;
 	private float timeElapsed = 0f;
+	public float DepthSizeModifier;
+	public float VoltageSizeModifer;
 
 	public TextMeshPro inkAmountText, voltageText;
 
@@ -68,7 +70,7 @@ public class TattooGunManager : MonoBehaviour
 
 	private void OnTriggerStay(Collider other)
 	{
-		Debug.Log("now drawing" + other.gameObject.name);
+		//Debug.Log("now drawing" + other.gameObject.name);
 
 		if (other.CompareTag("Canvas") & gunVoltage > 0f & inkAmount > 0f)
 		{
@@ -78,8 +80,8 @@ public class TattooGunManager : MonoBehaviour
 			GameObject temp = Instantiate(drawingSphere, spawnPos, Quaternion.identity);
 			temp.GetComponent<Renderer>().material = GetComponent<Renderer>().materials[0];
 
-			float depthZ = (1 - tempManager.GunDepth.z) * .01f;
-			depthZ *= (gunVoltage / 10f) * 1.02f;
+			float depthZ = tempManager.GunDepth.z * DepthSizeModifier;
+			depthZ *= (gunVoltage / 10f) * VoltageSizeModifer;
 			temp.transform.localScale = new Vector3(depthZ, depthZ, depthZ);
 		}
 	}
@@ -89,7 +91,6 @@ public class TattooGunManager : MonoBehaviour
 	public void ChangeInkColor(Material newColor)
 	{
 		ClearInkFromGun();
-		//if (SelectedInk == null) return;
 		Debug.Log("Changing ink " + newColor.name);
 		inkAmount = 100f;
 
