@@ -10,9 +10,8 @@ public class CanvasManager : MonoBehaviour
 	public GameObject TattooGunNeedleTip;
 	public GameObject TattooGunNeedleStart;
 
-	public TextMeshPro GunDepthText, NumScarsText;
+	public TextMeshPro GunDepthText;
 	public Vector3 GunDepth;
-	public float numScars = 0f;
 
 	public bool isPenetrated;
 
@@ -30,16 +29,6 @@ public class CanvasManager : MonoBehaviour
 		{
 			GunDepth = CalculatePenetrationDepth();
 			GunDepthText.text = "Depth: " + GunDepth.z;
-			if (GunDepth.z > 0.25f)
-			{
-				numScars++;
-			}
-			NumScarsText.text = "Num Scars: " + numScars;
-			if (numScars > 15)
-			{
-				NumScarsText.text = "You have injured your canvas: " + numScars;
-				TattooGun.SetActive(false);
-			}
 		}
 	}
 
