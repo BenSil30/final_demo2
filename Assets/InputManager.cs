@@ -39,6 +39,9 @@ public class InputManager : MonoBehaviour
 
 	private void VibrateControllers()
 	{
+		// dont vibrate if tattoo gun isn't picked up
+		if (!TattooGunManager.TattooGunSelected) return;
+
 		InputDevice controller = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
 		if (!controller.isValid ||
 			!controller.characteristics.HasFlag(InputDeviceCharacteristics.HeldInHand) ||
@@ -49,6 +52,7 @@ public class InputManager : MonoBehaviour
 		rightTriggerValue = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, OVRInput.Controller.RTouch);
 
 		isVibratingR = rightTriggerValue > 0.0;
+		rightTriggerValue = Mathf.Clamp(rightTriggerValue, 0.0f, 3.5f);
 
 		OVRInput.SetControllerVibration(0.3f, rightTriggerValue, OVRInput.Controller.RTouch); // Right controller
 	}
