@@ -40,16 +40,17 @@ public class InputManager : MonoBehaviour
 	private void VibrateControllers()
 	{
 		InputDevice controller = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
-		if (controller.isValid &&
-			controller.characteristics.HasFlag(InputDeviceCharacteristics.HeldInHand) &&
-			controller.characteristics.HasFlag(InputDeviceCharacteristics.Controller))
+		if (!controller.isValid ||
+			!controller.characteristics.HasFlag(InputDeviceCharacteristics.HeldInHand) ||
+			!controller.characteristics.HasFlag(InputDeviceCharacteristics.Controller))
 		{
-			rightTriggerValue = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, OVRInput.Controller.RTouch);
-
-			isVibratingR = rightTriggerValue > 0.0;
-
-			OVRInput.SetControllerVibration(0.3f, rightTriggerValue, OVRInput.Controller.RTouch); // Right controller
+			return;
 		}
+		rightTriggerValue = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, OVRInput.Controller.RTouch);
+
+		isVibratingR = rightTriggerValue > 0.0;
+
+		OVRInput.SetControllerVibration(0.3f, rightTriggerValue, OVRInput.Controller.RTouch); // Right controller
 	}
 
 	private void UpdateVoltage()

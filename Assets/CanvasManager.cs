@@ -25,11 +25,10 @@ public class CanvasManager : MonoBehaviour
 	// Update is called once per frame
 	private void Update()
 	{
-		if (isPenetrated)
-		{
-			GunDepth = CalculatePenetrationDepth();
-			GunDepthText.text = "Depth: " + GunDepth.z;
-		}
+		if (!isPenetrated) return;
+
+		GunDepth = CalculatePenetrationDepth();
+		GunDepthText.text = "Depth: " + GunDepth.z;
 	}
 
 	private void OnTriggerEnter(Collider other)
