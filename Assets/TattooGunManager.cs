@@ -79,7 +79,7 @@ public class TattooGunManager : MonoBehaviour
 			temp.GetComponent<Renderer>().material = GetComponent<Renderer>().materials[0];
 
 			float depthZ = (1 - tempManager.GunDepth.z) * .01f;
-			depthZ = depthZ * (gunVoltage / 10f);
+			depthZ *= (gunVoltage / 10f) * 1.02f;
 			temp.transform.localScale = new Vector3(depthZ, depthZ, depthZ);
 		}
 	}
@@ -112,6 +112,7 @@ public class TattooGunManager : MonoBehaviour
 
 	public void DecrementInkAmount()
 	{
+		if (!TattooGunSelected) return;
 		inkAmount -= gunVoltage;
 		inkAmount = Mathf.Clamp(inkAmount, 0f, 100f);
 	}
